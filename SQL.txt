@@ -1,0 +1,47 @@
+CREATE TABLE Mote (
+num INT NOT NULL PRIMARY KEY,
+location VARCHAR(160) NOT NULL
+);
+
+CREATE TABLE Sensor_Quantities (
+cod_s INT NOT NULL PRIMARY KEY,
+type VARCHAR(40) NOT NULL,
+value INT NOT NULL,
+num INT NOT NULL REFERENCES Mote (num)
+);
+
+CREATE TABLE Actuators (
+cod_a INT NOT NULL PRIMARY KEY,
+type VARCHAR(40) NOT NULL,
+power INT NOT NULL,
+num INT NOT NULL REFERENCES Mote (num)
+);
+
+CREATE TABLE Sensor_History (
+cod_hs INT NOT NULL PRIMARY KEY,
+type VARCHAR(40) NOT NULL,
+maximum_value INT NOT NULL,
+minimum_value INT NOT NULL,
+cod_s INT NOT NULL REFERENCES Sensor_Quantities (cod_s)
+);
+
+CREATE TABLE Actuators_History (
+cod_ha INT NOT NULL PRIMARY KEY,
+type VARCHAR(40) NOT NULL,
+previous_value INT NOT NULL,
+cod_a INT NOT NULL REFERENCES Actuators (cod_a)
+);
+
+CREATE TABLE rules (
+cod_r INT NOT NULL PRIMARY KEY,
+type VARCHAR(40) NOT NULL,
+threshold INT NOT NULL
+);
+
+INSERT INTO mote(num, location) VALUES(1, 'Ambiente_1');
+
+INSERT INTO mote(num, location) VALUES(2, 'Ambiente_2');
+
+INSERT INTO rules(cod_r, type,	threshold) VALUES(1, 'temperature', 20);
+
+INSERT INTO rules(cod_r, type,	threshold) VALUES(2, 'temperature', 25);
